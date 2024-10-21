@@ -1,8 +1,16 @@
+# Qu'est ce que c'est ?
+
+MonitorServices est un logiciel permettant de monitorer  
+des services webs
+si un service est down, alors l'évenement
+est signalé sur la page web du serveur
+
+
 # Instructions pour utiliser le service
 
 
 voici le lien vers lequel consulter le code
-https://github.com/whoamitty/monitorServices/
+https://github.com/whoamitty/MonitorServices/
 
 
 
@@ -30,23 +38,23 @@ sudo apt install python3
 ## 4. Pour télécharger par zip
 
 <details> <summary> par zip </summary>
-En ayant un accès(que je peut donner) au dépo
-le fichier est téléchargeable par ce lien depuis un navigateur
+
+fichier zip téléchargeable par ce lien depuis un navigateur
+
 ```
-https://github.com/whoamitty/monitorServices/archive/refs/heads/main.zip
+https://github.com/whoamitty/MonitorServices/archive/refs/heads/main.zip
 ```
 
-Si depo est mis en public,  
-la command wget pouras être lancé pour télécharger le zip depuis un terminal
+Pour télécharger et décomprésser le zip depuis un terminal
 
 ```
 cd ~/chemin/vers/la/ou/on/veut/mettre/le/dossier
 
-wget https://github.com/whoamitty/monitorServices/archive/refs/heads/main.zip
+wget https://github.com/whoamitty/MonitorServices/archive/refs/heads/main.zip
 
-unzip monitorServices-main.zip -d dossier_de_destination
+unzip MonitorServices-main.zip -d dossier_de_destination
 
-rm monitorServices-main.zip #pour supprimer le zip
+rm MonitorServices-main.zip #pour supprimer le zip
 ```
 </details>
 
@@ -65,7 +73,7 @@ ses commandes permettent de télécharger le depo en local
 ### 5.2 télécharger le depo
 
 ```
-git clone --depth=1 git@github.com:whoamitty/monitorServices.git dossier_du_depo
+git clone --depth=1 git@github.com:whoamitty/MonitorServices.git dossier_du_depo
 ```
 
 `dossier_du_depo` sera créé dans le dossier courant
@@ -73,7 +81,7 @@ git clone --depth=1 git@github.com:whoamitty/monitorServices.git dossier_du_depo
 si `dossier_du_depo` n'existe pas, le dossier `dossier_du_depo` seras créé par git  
 
 si aucun nom de dossier est donnée
-le nom du dépo `monitorServices` sera choisi par défault
+le nom du dépo `MonitorServices` sera choisi par défault
 </details>
 
 
