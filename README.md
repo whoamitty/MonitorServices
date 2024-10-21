@@ -9,11 +9,6 @@ est signalé sur la page web du serveur
 # Instructions pour utiliser le service
 
 
-voici le lien vers lequel consulter le code
-https://github.com/whoamitty/MonitorServices/
-
-
-
 ## 1. vérifier si python3 est installé
 ```
 $> python3 -V
