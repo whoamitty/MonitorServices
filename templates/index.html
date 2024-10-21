@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- variable  -->
+    <meta http-equiv="refresh" content="{{WAIT}};url={{ADDRESS}}:{{PORT}}">
+
+     <!-- 5 minutes=300secondes -->
+    <!-- <meta http-equiv="refresh" content="300;url=http://127.0.0.1:5000"> -->
+    <title>Disponibilité</title>
+</head>
+
+
+<body>
+
+    <center>
+    <h1>Services Down</h1>
+    <h3 style="padding-top:2em;">
+
+    {% for serviceDown in servicesDown %}
+    <div style="color:red; font-weight:1000;">{{ serviceDown }}</div> <br>
+    {% endfor %}
+
+    </center>
+
+
+    
+</h3>
+
+</body>
+</html>
