@@ -41,9 +41,8 @@ sudo apt install python3
 
 fichier zip téléchargeable par ce lien depuis un navigateur
 
-```
 https://github.com/whoamitty/MonitorServices/archive/refs/heads/main.zip
-```
+
 
 Pour télécharger et décomprésser le zip depuis un terminal
 
