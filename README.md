@@ -10,14 +10,17 @@ est signalé sur la page web du serveur
 
 
 ## 1. vérifier si python3 est installé
-```
-$> python3 -V
-Python3 3.10.*
-```
-ou si ça ne fonctionne pas
+
 
 ```
 $> python -V
+Python3 3.10.*
+```
+
+ou si ça ne fonctionne pas
+
+```
+$> python3 -V
 Python3 3.10.*
 ```
 
