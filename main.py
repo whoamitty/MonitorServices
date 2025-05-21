@@ -13,7 +13,7 @@ def index():
     if good:
         return render_template("AllRight.html",ADDRESS=db.ADRESSE,PORT=db.PORT,WHAIT=db.WAIT)
     elif not good:
-        return render_template("index.html",servicesDown=servicesDown,ADDRESS=db.ADRESSE,PORT=db.PORT,WAIT=db.WAIT)
+        return render_template("warning.html",servicesDown=servicesDown,ADDRESS=db.ADRESSE,PORT=db.PORT,WAIT=db.WAIT)
 
 @app.route("/about")
 def about_page():
@@ -22,3 +22,8 @@ def about_page():
 if __name__ == "__main__":
     # app.debug = True # Mode debug pour les phases de testes
     app.run(host=db.IPSERVERFLASK, port=db.PORT) # un peut bizarre le IPSERVERFLASK et PORT dans db
+
+
+
+
+    

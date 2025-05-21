@@ -1,5 +1,4 @@
 import sqlite3
-# from sqlite3 import Error
 import ping
 from constant import *
 
@@ -10,23 +9,21 @@ def get_connection():
         print(sqlite3.version)
         return conn
     except sqlite3.Error as e:
-        
+
         print(e)
 
-    
-    
+
 
 def create_table(c):
     cur = c.cursor()
     cur.execute(f"""        
         CREATE TABLE {TABLE_SERVICE}(
-            {SERVICE_ID} INTEGER PRIMARY KEY AUTOINCREMENT,    -- Must map to an artist.ENTERPRISE_ID!
+            {SERVICE_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
             {SERVICE_NAME} TEXT,
             {SERVICE_DOMAIN} TEXT,
             {SERVICE_IP} TEXT,
             {NUMBERFILEDTRIES} INTEGER);
     """)
-
 
 
 def select_data(c):
@@ -65,36 +62,56 @@ def checkNumberFiledTries(c,service_id):
     return int(numberFiledTries[0][0])
 
 
+def manage_service_ping_and_retries(IP, numberFiledTries, MAXTRIES, c, service_id, dictServices_data, i, stringHtmlListServices):
+    good = True  # Initialiser good à True
+
+    if IP is None:
+        domain = dictServices_data['DOMAINS'][i]
+        ping_result = ping.ping_address(domain)
+    else:
+        ping_result = ping.ping_address(IP)
+
+    print("ping_result: ",ping_result)
+
+    if not ping_result:
+        if numberFiledTries < MAXTRIES:
+            modify_data(c, service_id, new_numberFiledTries=numberFiledTries + 1)
+            print("numberFiledTries+1: numberFiledTries<MAXTRIES", f"{numberFiledTries + 1}<{MAXTRIES}")
+        elif numberFiledTries == MAXTRIES:
+            print("Adding service to stringHtmlListServices: numberFiledTries==MAXTRIES", MAXTRIES)
+            good = False
+            stringHtmlListServices.append(
+                f"{dictServices_data['IDS'][i]} {dictServices_data['NAMES'][i]} {dictServices_data['DOMAINS'][i]} {dictServices_data['IP'][i]}")
+
+    elif numberFiledTries > 0:
+        modify_data(c, service_id, new_numberFiledTries=0)
+
+    return  stringHtmlListServices, good
+
 def stringHtmlListServices(c):
-    dictServices_data=select_data(c)
-    stringHtmlListServices=[]
-    i=0
-    good=True
+    dictServices_data = select_data(c)
+    stringHtmlListServices = []
+    i = 0
+    good = True
+ 
     for IP in dictServices_data['IP']:
+        service_id = dictServices_data['IDS'][i]
+        print("service_id:", service_id)
+        numberFiledTries = checkNumberFiledTries(c, service_id)
 
-        service_id=dictServices_data['IDS'][i]
-        print("service_id:",service_id)
-        numberFiledTries=checkNumberFiledTries(c,service_id)
-        if not ping.ping_ipurl(IP) :
-
-            if numberFiledTries<MAXTRIES:
-                modify_data(c, service_id, new_numberFiledTries=numberFiledTries+1)
-                print("numberFiledTries+1: numberFiledTries<MAXTRIES",f"{numberFiledTries+1}<{MAXTRIES}")
-
-
-            elif numberFiledTries==MAXTRIES:
-                print("Adding service to stringHtmlListServices: numberFiledTries==MAXTRIES==",MAXTRIES)
-                good=False
-                stringHtmlListServices.append(f"{dictServices_data['IDS'][i]} {dictServices_data['NAMES'][i]} {dictServices_data['DOMAINS'][i]} {dictServices_data['IP'][i]}")
-
-        elif numberFiledTries > 0:
-            modify_data(c, service_id, new_numberFiledTries=0)
+        if good :
+            stringHtmlListServices, good = manage_service_ping_and_retries(IP, numberFiledTries, MAXTRIES, c, service_id, dictServices_data, i, stringHtmlListServices)
         
-        i+=1
+        else :
+            manage_service_ping_and_retries(IP, numberFiledTries, MAXTRIES, c, service_id, dictServices_data, i, stringHtmlListServices)
 
+        i += 1
 
-    print("print(stringHtmlListServices)",stringHtmlListServices)
+        
+
+    print("print(stringHtmlListServices)", stringHtmlListServices)
     return stringHtmlListServices, good
+
 
 
 
@@ -134,7 +151,12 @@ def insert_data(c, service_name=None, service_domain=None, service_ip=None):
 
 
 
-def modify_data(c, service_id, new_service_name=None, new_service_domain=None, new_service_ip=None, new_numberFiledTries=None):
+def modify_data(c, 
+                service_id, 
+                new_service_name=None, 
+                new_service_domain=None, 
+                new_service_ip=None, 
+                new_numberFiledTries=None):
     print("modify_data")
     cur = c.cursor()
     updates = []
@@ -188,6 +210,3 @@ try :
 except sqlite3.Error as e:
     # except Error as e:
     print(e)
-    
-
-

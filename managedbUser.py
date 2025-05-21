@@ -3,13 +3,16 @@ import managedb as db
 
 c = db.get_connection()
 
-db.create_table(c) # Initialiser la table
-db.insert_data(c, "test","test.com", "19.19.19.102")
-db.insert_data(c, "example","example.com", "93.184.215.14")
-db.insert_data(c, "example","example.com", "93.184.215.14")
+# les valeurs par défault sont définits à None  ( service_name=None, service_domain=None, service_ip=None )
+# db.create_table(c) # Initialiser la table
+# db.insert_data(c, "example","example.com")
+# db.insert_data(c,service_domain="google.com",service_ip="142.250.217.206") 
+db.insert_data(c,service_domain="wikidot.com", service_ip="107.20.139.176")
+db.insert_data(c,service_domain="nedbank.co.za")
+db.insert_data(c,service_domain="lotro.com")
+db.insert_data(c,service_domain="baidu.com")
 
-db.insert_data(c,service_domain="google.com",service_ip="142.250.217.206") #si service_name est non défini alors service_name=="None"
-
+# db.insert_data( service_name=None, service_domain=None, service_ip=None )
 
 # db.checkNumberFiledTries(c,4) # combien d'essais consécutifs échoués sur l'id 4
 
